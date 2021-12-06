@@ -62,6 +62,7 @@ enum SECTIONS {
 const DEFAULT_ORDER = [
   'line',
   'big_number',
+  'big_number2',
   'big_number_total',
   'table',
   'pivot_table_v2',

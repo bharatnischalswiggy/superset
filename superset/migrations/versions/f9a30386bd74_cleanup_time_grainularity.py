@@ -64,6 +64,7 @@ def upgrade():
         "area",
         "bar",
         "big_number",
+        "big_number2",
         "compare",
         "dual_line",
         "line",

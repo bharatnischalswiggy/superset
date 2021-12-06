@@ -19,6 +19,7 @@
 import { isFeatureEnabled, Preset, FeatureFlag } from '@superset-ui/core';
 import {
   BigNumberChartPlugin,
+  BigNumberChart2Plugin,
   BigNumberTotalChartPlugin,
 } from '@superset-ui/legacy-preset-chart-big-number';
 import CalendarChartPlugin from '@superset-ui/legacy-plugin-chart-calendar';
@@ -60,6 +61,7 @@ import {
   EchartsTimeseriesChartPlugin,
   EchartsTimeseriesBarChartPlugin,
   EchartsTimeseriesLineChartPlugin,
+  EchartsTimeseriesLine2ChartPlugin,
   EchartsTimeseriesScatterChartPlugin,
   EchartsTimeseriesSmoothLineChartPlugin,
   EchartsTimeseriesStepChartPlugin,
@@ -98,6 +100,7 @@ export default class MainPreset extends Preset {
         new AreaChartPlugin().configure({ key: 'area' }),
         new BarChartPlugin().configure({ key: 'bar' }),
         new BigNumberChartPlugin().configure({ key: 'big_number' }),
+        new BigNumberChart2Plugin().configure({ key: 'big_number2' }),
         new BigNumberTotalChartPlugin().configure({ key: 'big_number_total' }),
         new EchartsBoxPlotChartPlugin().configure({ key: 'box_plot' }),
         new BubbleChartPlugin().configure({ key: 'bubble' }),
@@ -150,6 +153,9 @@ export default class MainPreset extends Preset {
         }),
         new EchartsTimeseriesLineChartPlugin().configure({
           key: 'echarts_timeseries_line',
+        }),
+        new EchartsTimeseriesLine2ChartPlugin().configure({
+          key: 'echarts_timeseries_line2',
         }),
         new EchartsTimeseriesSmoothLineChartPlugin().configure({
           key: 'echarts_timeseries_smooth',

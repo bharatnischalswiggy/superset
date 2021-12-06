@@ -18,6 +18,7 @@
  */
 import { Preset } from '@superset-ui/core';
 import BigNumberChartPlugin from './BigNumber';
+import BigNumberChart2Plugin from './BigNumber2';
 import BigNumberTotalChartPlugin from './BigNumberTotal';
 
 export default class BigNumberChartPreset extends Preset {
@@ -26,6 +27,7 @@ export default class BigNumberChartPreset extends Preset {
       name: 'BigNumber charts',
       plugins: [
         new BigNumberChartPlugin().configure({ key: 'big_number' }),
+        new BigNumberChart2Plugin().configure({ key: 'big_number2' }),
         new BigNumberTotalChartPlugin().configure({ key: 'big_number_total' }),
       ],
     });

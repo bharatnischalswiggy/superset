@@ -21,6 +21,7 @@ export { default as EchartsTimeseriesChartPlugin } from './Timeseries';
 export { default as EchartsAreaChartPlugin } from './Timeseries/Area';
 export { default as EchartsTimeseriesBarChartPlugin } from './Timeseries/Regular/Bar';
 export { default as EchartsTimeseriesLineChartPlugin } from './Timeseries/Regular/Line';
+export { default as EchartsTimeseriesLine2ChartPlugin } from './Timeseries/Regular/Line2';
 export { default as EchartsTimeseriesScatterChartPlugin } from './Timeseries/Regular/Scatter';
 export { default as EchartsTimeseriesSmoothLineChartPlugin } from './Timeseries/Regular/SmoothLine';
 export { default as EchartsTimeseriesStepChartPlugin } from './Timeseries/Step';
