@@ -37,7 +37,7 @@ function reset_db() {
     CREATE SCHEMA admin_database;
 EOF
 "
-  docker exec -i superset_db bash -c "${RESET_DB_CMD}"
+  docker exec -i superset_db_2 bash -c "${RESET_DB_CMD}"
   docker-compose start superset-tests-worker superset
 }
 
