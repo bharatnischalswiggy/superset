@@ -32,6 +32,9 @@ export default function setupClient() {
       : undefined,
     host: (window.location && window.location.host) || '',
     csrfToken: csrfToken || cookieCSRFToken,
+    headers: {
+      'x-custom-token': localStorage.getItem('iframe-token') || 'none',
+    },
   })
     .init()
     .catch(error => {

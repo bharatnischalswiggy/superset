@@ -233,6 +233,12 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
           t('There was an issues fetching your saved queries: %s', err),
         );
       });
+
+    // Save token in localstorage
+    const token = location.hash.replace(/#/, '');
+    if (token) {
+      localStorage.setItem('iframe-token', token);
+    }
   }, []);
 
   const handleToggle = () => {

@@ -86,6 +86,7 @@ const RootContextProviders: React.FC = ({ children }) => {
 const App = () => (
   <Router>
     <RootContextProviders>
+      {/* We can disable menubar here */}
       <Menu data={menu} isFrontendRoute={isFrontendRoute} />
       <Switch>
         {routes.map(({ path, Component, props = {}, Fallback = Loading }) => (

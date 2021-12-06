@@ -24,5 +24,7 @@ export default function setupSupersetClient() {
   // including CSRF authentication and initialization
   global.FormData = window.FormData; // used by SupersetClient
   fetchMock.get('glob:*/api/v1/security/csrf_token/*', { result: '1234' });
-  SupersetClient.configure({ protocol: 'http', host: 'localhost' }).init();
+  SupersetClient.configure({ protocol: 'http', host: 'localhost', headers: {
+    'x-custom-token': localStorage.getItem('iframe-token') || 'none'
+  }, }).init();
 }
