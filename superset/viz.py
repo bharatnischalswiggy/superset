@@ -1245,6 +1245,39 @@ class BigNumberViz(BaseViz):
         df[DTTM_ALIAS] = df.index
         return super().get_data(df)
 
+class BigNumberViz(BaseViz):
+
+    """Put emphasis on a single metric with this big number viz"""
+
+    viz_type = "big_number2"
+    verbose_name = _("Big Number with Trendline")
+    credits = 'a <a href="https://github.com/airbnb/superset">Superset</a> original'
+    is_timeseries = True
+
+    def query_obj(self) -> QueryObjectDict:
+        query_obj = super().query_obj()
+        metric = self.form_data.get("metric")
+        if not metric:
+            raise QueryObjectValidationError(_("Pick a metric!"))
+        query_obj["metrics"] = [self.form_data.get("metric")]
+        self.form_data["metric"] = metric
+        return query_obj
+
+    def get_data(self, df: pd.DataFrame) -> VizData:
+        if df.empty:
+            return None
+
+        df = df.pivot_table(
+            index=DTTM_ALIAS,
+            columns=[],
+            values=self.metric_labels,
+            dropna=False,
+            aggfunc=np.min,  # looking for any (only) value, preserving `None`
+        )
+        df = self.apply_rolling(df)
+        df[DTTM_ALIAS] = df.index
+        return super().get_data(df)
+
 
 class BigNumberTotalViz(BaseViz):
 
