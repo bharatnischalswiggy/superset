@@ -101,12 +101,13 @@ const SliceHeader: FC<SliceHeaderProps> = ({
     <div className="chart-header" data-test="slice-header" ref={innerRef}>
       <div className="header-title">
         <EditableTitle
-          title={
-            sliceName ||
-            (editMode
-              ? '---' // this makes an empty title clickable
-              : '')
-          }
+          // title={
+          //   sliceName ||
+          //   (editMode
+          //     ? '---' // this makes an empty title clickable
+          //     : '')
+          // }
+          title=""
           canEdit={editMode}
           emptyText=""
           onSaveTitle={updateSliceName}

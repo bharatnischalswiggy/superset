@@ -329,7 +329,7 @@ class BigNumberVis extends React.PureComponent<BigNumberVisProps, {}> {
           type: 'linear',
           includeZero: startYAxisAtZero,
         }}
-        width={Math.floor(width * 0.6)}
+        width={Math.floor(width * 0.5)}
         height={maxHeight}
         margin={CHART_MARGIN}
         eventTrigger="container"
