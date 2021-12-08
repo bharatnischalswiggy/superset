@@ -20,6 +20,7 @@ import { isFeatureEnabled, Preset, FeatureFlag } from '@superset-ui/core';
 import {
   BigNumberChartPlugin,
   BigNumberChart2Plugin,
+  BigNumberChart3Plugin,
   BigNumberTotalChartPlugin,
 } from '@superset-ui/legacy-preset-chart-big-number';
 import CalendarChartPlugin from '@superset-ui/legacy-plugin-chart-calendar';
@@ -101,6 +102,7 @@ export default class MainPreset extends Preset {
         new BarChartPlugin().configure({ key: 'bar' }),
         new BigNumberChartPlugin().configure({ key: 'big_number' }),
         new BigNumberChart2Plugin().configure({ key: 'big_number2' }),
+        new BigNumberChart3Plugin().configure({ key: 'big_number3' }),
         new BigNumberTotalChartPlugin().configure({ key: 'big_number_total' }),
         new EchartsBoxPlotChartPlugin().configure({ key: 'box_plot' }),
         new BubbleChartPlugin().configure({ key: 'bubble' }),
