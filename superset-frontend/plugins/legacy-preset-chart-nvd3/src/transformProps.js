@@ -94,6 +94,7 @@ export default function transformProps(chartProps) {
     yAxisShowminmax,
     yAxis2Showminmax,
     yLogScale,
+    customLabels,
   } = formData;
 
   let {
@@ -134,6 +135,12 @@ export default function transformProps(chartProps) {
     markerLines = tokenizeToNumericArray(markerLines);
     markerLineLabels = tokenizeToStringArray(markerLineLabels);
     markers = tokenizeToNumericArray(markers);
+  }
+
+  if (vizType === 'dist_bar' && customLabels) {
+    data.forEach((row, ind) => {
+      row.key = customLabels?.split(',')[ind] || 'None'
+    })
   }
 
   return {

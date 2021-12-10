@@ -96,6 +96,19 @@ const config: ControlPanelConfig = {
             },
           },
         ],
+        [
+          {
+            name: 'custom_labels',
+            config: {
+              type: 'TextControl',
+              label: t('Custom label names separated by comma'),
+              renderTrigger: false,
+              description: t(
+                'Custom label names separated by comma in case you selected custom labels',
+              ),
+            },
+          },
+        ],
         ['y_axis_format'],
         [yAxisLabel],
         [showControls, null],
