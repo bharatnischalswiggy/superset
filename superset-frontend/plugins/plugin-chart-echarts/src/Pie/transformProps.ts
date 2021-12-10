@@ -77,6 +77,8 @@ export function formatPieLabel({
       return `${name}: ${formattedValue} (${formattedPercent})`;
     case EchartsPieLabelType.KeyPercent:
       return `${name}: ${formattedPercent}`;
+    case EchartsPieLabelType.Custom:
+      return `${name}`;
     default:
       return name;
   }
@@ -109,6 +111,7 @@ export default function transformProps(
     showLegend,
     showLabelsThreshold,
     emitFilter,
+    customLabels,
   }: EchartsPieFormData = {
     ...DEFAULT_LEGEND_FORM_DATA,
     ...DEFAULT_PIE_FORM_DATA,
@@ -147,13 +150,18 @@ export default function transformProps(
   const colorFn = CategoricalColorNamespace.getScale(colorScheme as string);
   const numberFormatter = getNumberFormatter(numberFormat);
 
-  const transformedData: PieSeriesOption[] = data.map(datum => {
-    const name = extractGroupbyLabel({
-      datum,
-      groupby: groupbyLabels,
-      coltypeMapping,
-      timeFormatter: getTimeFormatter(dateFormat),
-    });
+  const transformedData: PieSeriesOption[] = data.map((datum, ind) => {
+    let name = '';
+    if (labelType === EchartsPieLabelType.Custom) {
+      name = customLabels?.split(',')[ind] || 'None';
+    } else {
+      name = extractGroupbyLabel({
+        datum,
+        groupby: groupbyLabels,
+        coltypeMapping,
+        timeFormatter: getTimeFormatter(dateFormat),
+      });
+    }
 
     const isFiltered =
       filterState.selectedValues && !filterState.selectedValues.includes(name);

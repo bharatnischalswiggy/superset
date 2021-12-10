@@ -106,8 +106,22 @@ const config: ControlPanelConfig = {
                 ['key_value', 'Category and Value'],
                 ['key_percent', 'Category and Percentage'],
                 ['key_value_percent', 'Category, Value and Percentage'],
+                ['custom', 'Custom labels'],
               ],
               description: t('What should be shown on the label?'),
+            },
+          },
+        ],
+        [
+          {
+            name: 'custom_labels',
+            config: {
+              type: 'TextControl',
+              label: t('Custom label names separated by comma'),
+              renderTrigger: true,
+              description: t(
+                'Custom label names separated by comma in case you selected custom labels',
+              ),
             },
           },
         ],

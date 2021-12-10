@@ -50,6 +50,7 @@ export type EchartsPieFormData = QueryFormData &
     dateFormat: string;
     showLabelsThreshold: number;
     emitFilter: boolean;
+    customLabels: string;
   };
 
 export enum EchartsPieLabelType {
@@ -59,6 +60,7 @@ export enum EchartsPieLabelType {
   KeyValue = 'key_value',
   KeyPercent = 'key_percent',
   KeyValuePercent = 'key_value_percent',
+  Custom = 'custom',
 }
 
 export interface EchartsPieChartProps extends ChartProps {
