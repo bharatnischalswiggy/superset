@@ -61,8 +61,26 @@ export type BigNumberChartProps = ChartProps & {
   })[];
 };
 
+const timeGrainMapping = {
+  '2004-11-01T00:00:00 : 2004-11-02T00:00:00': 'PT1H',
+  '2004-10-31T00:00:00 : 2004-11-01T00:00:00': 'PT1H',
+  '2003-10-26T00:00:00 : 2004-11-01T00:00:00': 'P1D',
+  '2003-10-01T00:00:00 : 2004-11-01T00:00:00': 'P1W',
+};
+
 export default function transformProps(chartProps: BigNumberChartProps) {
-  const { width, height, queriesData, formData, rawFormData } = chartProps;
+  const { width, height, queriesData, formData, rawFormData, hooks } =
+    chartProps;
+
+  if (formData.timeGrainSqla !== timeGrainMapping[formData.timeRange]) {
+    if (typeof hooks.setControlValue === 'function') {
+      hooks.setControlValue(
+        'time_grain_sqla',
+        timeGrainMapping[formData?.timeRange || 'P1H'],
+      );
+    }
+  }
+
   const {
     compareLag: compareLag_,
     compareSuffix = '',

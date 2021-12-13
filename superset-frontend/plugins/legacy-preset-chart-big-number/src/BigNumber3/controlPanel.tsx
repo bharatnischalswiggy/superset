@@ -29,7 +29,84 @@ import { headerFontSize, subheaderFontSize } from '../sharedControls';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
-    sections.legacyTimeseriesTime,
+    {
+      label: t('Time'),
+      expanded: true,
+      description: t('Time related form attributes'),
+      controlSetRows: [
+        ['granularity'],
+        ['druid_time_origin'],
+        ['granularity_sqla'],
+        // ['time_grain_sqla'],
+        // ['time_range'],
+      ],
+    },
+    {
+      label: 'Custom Time Options',
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'time_range',
+            config: {
+              type: 'SelectControl',
+              label: t('Time Slots'),
+              choices: [
+                ['2004-11-01T00:00:00 : 2004-11-02T00:00:00', 'Today'],
+                ['2004-10-31T00:00:00 : 2004-11-01T00:00:00', 'Yesterday'],
+                ['2003-10-26T00:00:00 : 2004-11-01T00:00:00', 'Last 7 days'],
+                ['2003-10-01T00:00:00 : 2004-11-01T00:00:00', 'Last 4 weeks'],
+              ],
+              description: t(
+                'How to display time shifts: as individual lines; as the ' +
+                  'difference between the main time series and each time shift; ' +
+                  'as the percentage change; or as the ratio between series and time shifts.',
+              ),
+            },
+          },
+        ],
+        [
+          {
+            name: 'time_grain_sqla',
+            config: {
+              type: 'SelectControl',
+              label: t('Time Grain'),
+              // mapStateToProps: state => {
+              //   console.log('State', state);
+              //   const timeGrainMapping = {
+              //     '2003-11-01T05:26:46 : now': [['P1H', 'Hour']],
+              //     '2003-11-01T00:00:00 : 2003-12-01T00:00:00': [
+              //       ['P1H', 'Hour'],
+              //     ],
+              //     '2003-11-01T00:00:00 : 2004-01-01T00:00:00': [['P1D', 'Day']],
+              //     '2003-11-01T00:00:00 : 2004-03-01T00:00:00': [
+              //       ['P1W', 'Week'],
+              //     ],
+              //   };
+              //   return {
+              //     choices:
+              //       timeGrainMapping[
+              //         state?.form_data?.time_range ||
+              //           '2003-11-01T05:26:46 : now'
+              //       ],
+              //   };
+              // },
+              choices: [
+                ['PT1H', 'Hour'],
+                ['P1D', 'Day'],
+                ['P1W', 'Week'],
+              ],
+              // renderTrigger: true,
+              description: t(
+                'How to display time shifts: as individual lines; as the ' +
+                  'difference between the main time series and each time shift; ' +
+                  'as the percentage change; or as the ratio between series and time shifts.',
+              ),
+            },
+          },
+        ],
+      ],
+    },
     {
       label: t('Query'),
       expanded: true,
