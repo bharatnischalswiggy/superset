@@ -16,18 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Preset } from '@superset-ui/core';
-import BigNumberChartPlugin from './BigNumber';
-import BigNumberTotalChartPlugin from './BigNumberTotal';
-
-export default class BigNumberChartPreset extends Preset {
-  constructor() {
-    super({
-      name: 'BigNumber charts',
-      plugins: [
-        new BigNumberChartPlugin().configure({ key: 'big_number' }),
-        new BigNumberTotalChartPlugin().configure({ key: 'big_number_total' }),
-      ],
-    });
-  }
-}
+declare module '@data-ui/xy-chart';
+declare module '*.png';
+declare module '*.jpg';

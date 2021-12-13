@@ -19,10 +19,12 @@
 import { isFeatureEnabled, Preset, FeatureFlag } from '@superset-ui/core';
 import {
   BigNumberChartPlugin,
-  BigNumberChart2Plugin,
-  BigNumberChart3Plugin,
   BigNumberTotalChartPlugin,
 } from '@superset-ui/legacy-preset-chart-big-number';
+import {
+  BigNumberChart2Plugin,
+  BigNumberChart3Plugin,
+} from '../../custom-swiggy-plugin';
 import CalendarChartPlugin from '@superset-ui/legacy-plugin-chart-calendar';
 import ChordChartPlugin from '@superset-ui/legacy-plugin-chart-chord';
 import CountryMapChartPlugin from '@superset-ui/legacy-plugin-chart-country-map';
