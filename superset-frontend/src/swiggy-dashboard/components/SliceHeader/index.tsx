@@ -112,8 +112,10 @@ const SwiggySliceHeader: FC<SliceHeaderProps> = ({
   isFullSize,
   chartStatus,
   formData,
+  // ADDITION
   showTimestamp = true,
   isIndianTZ = true,
+  // ADDITION-END
 }) => {
   const dispatch = useDispatch();
   // TODO: change to indicator field after it will be implemented
