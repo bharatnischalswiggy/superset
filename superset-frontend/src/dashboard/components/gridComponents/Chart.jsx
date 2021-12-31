@@ -36,13 +36,9 @@ import {
 import { areObjectsEqual } from 'src/reduxUtils';
 import { FILTER_BOX_MIGRATION_STATES } from 'src/explore/constants';
 
-// REMOVED
+// TODO: SWIGGY
 // import SliceHeader from '../SliceHeader';
-// REMOVED-END
-
-// ADDITION
 import SwiggySliceHeader from 'src/swiggy-dashboard/components/SliceHeader';
-// ADDITION-END
 
 import MissingChart from '../MissingChart';
 import { slicePropShape, chartPropShape } from '../../util/propShapes';
@@ -345,7 +341,7 @@ export default class Chart extends React.Component {
         data-test-viz-type={slice.viz_type}
         data-test-chart-name={slice.slice_name}
       >
-        {/* UPDATED: Name */}
+        {/* TODO: SWIGGY */}
         <SwiggySliceHeader
           innerRef={this.setHeaderRef}
           slice={slice}
