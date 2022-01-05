@@ -41,6 +41,9 @@ const APP_DIR = path.resolve(__dirname, './');
 const BUILD_DIR = path.resolve(__dirname, '../superset/static/assets');
 const ROOT_DIR = path.resolve(__dirname, '..');
 
+// TODO:SWIGGY
+const npmRegistoryUserName = '@bharatnischal';
+
 const {
   mode = 'development',
   devserverPort = 9000,
@@ -419,10 +422,14 @@ const config = {
   devtool: false,
 };
 
+// TODO:SWIGGY
+const swiggyNpmPackageRegex = new RegExp(`^${npmRegistoryUserName}`);
+
 // find all the symlinked plugins and use their source code for imports
 Object.entries(packageConfig.dependencies).forEach(([pkg, version]) => {
   const srcPath = `./node_modules/${pkg}/src`;
-  if (/^@superset-ui/.test(pkg) && fs.existsSync(srcPath)) {
+  // TODO:SWIGGY
+  if ((/^@superset-ui/.test(pkg) || swiggyNpmPackageRegex.test(pkg)) && fs.existsSync(srcPath)) {
     console.log(`[Superset Plugin] Use symlink source for ${pkg} @ ${version}`);
     // only allow exact match so imports like `@superset-ui/plugin-name/lib`
     // and `@superset-ui/plugin-name/esm` can still work.
