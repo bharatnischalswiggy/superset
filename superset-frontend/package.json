@@ -48,6 +48,7 @@
     "lint": "npm run _lint && npm run type",
     "lint-fix": "npm run _lint -- --fix && npm run type",
     "plugins:build": "node ./scripts/build.js",
+    "custom-plugins:build": "node ./scripts/buildCustomPlugins.js",
     "plugins:build-assets": "node ./scripts/copyAssets.js",
     "plugins:build-storybook": "cd packages/superset-ui-demo && npm run build-storybook",
     "plugins:chromatic": "cd packages/superset-ui-demo && npm run chromatic",
