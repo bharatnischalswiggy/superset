@@ -48,6 +48,7 @@
     "lint": "npm run _lint && npm run type",
     "lint-fix": "npm run _lint -- --fix && npm run type",
     "plugins:build": "node ./scripts/build.js",
+    "custom-plugins:build": "node ./scripts/buildCustomPlugins.js",
     "plugins:build-assets": "node ./scripts/copyAssets.js",
     "plugins:build-storybook": "cd packages/superset-ui-demo && npm run build-storybook",
     "plugins:chromatic": "cd packages/superset-ui-demo && npm run chromatic",
@@ -75,6 +76,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "@babel/runtime-corejs3": "^7.12.5",
+    "@bharatnischal/superset-custom-chart-plugin": "^1.0.5",
     "@data-ui/sparkline": "^0.0.84",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/cache": "^11.4.0",
