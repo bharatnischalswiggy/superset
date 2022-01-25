@@ -90,7 +90,7 @@ CACHE_DEFAULT_TIMEOUT = int(timedelta(minutes=10).total_seconds())
 CACHE_CONFIG = {
     "CACHE_TYPE": "redis",
     "CACHE_DEFAULT_TIMEOUT": int(timedelta(minutes=1).total_seconds()),
-    "CACHE_KEY_PREFIX": "superset_cache",
+    "CACHE_KEY_PREFIX": "superset_cache_1",
     "CACHE_REDIS_URL": f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_CACHE_DB}",
 }
 
