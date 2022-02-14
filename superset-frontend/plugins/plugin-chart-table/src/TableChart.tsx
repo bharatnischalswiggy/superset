@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, { CSSProperties, useCallback, useMemo } from 'react';
+import React, { CSSProperties, useCallback, useMemo, useState } from 'react';
 import {
   ColumnInstance,
   ColumnWithLooseAccessor,
@@ -36,6 +36,7 @@ import {
   t,
   tn,
 } from '@superset-ui/core';
+import Modal from 'src/components/Modal';
 
 import { DataColumnMeta, TableChartTransformedProps } from './types';
 import DataTable, {
@@ -49,6 +50,7 @@ import Styles from './Styles';
 import { formatColumnValue } from './utils/formatValue';
 import { PAGE_SIZE_OPTIONS } from './consts';
 import { updateExternalFormData } from './DataTable/utils/externalAPIs';
+import MessageModal from './MessageModal';
 
 type ValueRange = [number, number];
 
@@ -188,11 +190,18 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     filters,
     sticky = true, // whether to use sticky header
     columnColorFormatters,
+    customModal,
+    requestMethod,
+    requestUrl,
+    primaryId,
   } = props;
   const timestampFormatter = useCallback(
     value => getTimeFormatterForGranularity(timeGrain)(value),
     [timeGrain],
   );
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [id, setId] = useState();
 
   const handleChange = useCallback(
     (filters: { [x: string]: DataRecordValue[] }) => {
@@ -462,10 +471,30 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     ],
   );
 
-  const columns = useMemo(
-    () => columnsMeta.map(getColumnConfigs),
-    [columnsMeta, getColumnConfigs],
-  );
+  const columns = useMemo(() => {
+    const newCols = columnsMeta;
+    if (
+      customModal &&
+      newCols.findIndex(({ key }) => key === 'request_body') === -1
+    ) {
+      newCols.push({
+        key: 'request_body',
+        label: 'Request Body',
+        isNumeric: false,
+        dataType: columnsMeta.length + 1,
+        isMetric: false,
+        isPercentMetric: false,
+        formatter: undefined,
+        config: {},
+      });
+    } else if (
+      !customModal &&
+      newCols.findIndex(({ key }) => key === 'request_body') !== -1
+    ) {
+      newCols.pop();
+    }
+    return newCols.map(getColumnConfigs);
+  }, [columnsMeta, getColumnConfigs]);
 
   const handleServerPaginationChange = (
     pageNumber: number,
@@ -474,30 +503,79 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     updateExternalFormData(setDataMask, pageNumber, pageSize);
   };
 
+  let tableData = data;
+  if (customModal) {
+    tableData = data.map((row: any) => {
+      row.request_body = {
+        key: 'button',
+        label: 'Send message',
+        handleClick: () => {
+          setIsModalOpen(true);
+          setId(row[primaryId]);
+        },
+      };
+
+      return row;
+    });
+  }
+
+  const hideModal = () => setIsModalOpen(false);
+
+  const sendData = (message: string) => {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    const requestOptions = {
+      method: requestMethod || 'POST',
+      headers: myHeaders,
+      body: JSON.stringify({
+        id,
+        message,
+      }),
+    };
+
+    const url = requestUrl.replaceAll('[id]', String(id));
+    fetch(url, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result);
+        hideModal();
+      })
+      .catch(error => console.log('error', error));
+  };
+
   return (
-    <Styles>
-      <DataTable<D>
-        columns={columns}
-        data={data}
-        rowCount={rowCount}
-        tableClassName="table table-striped table-condensed"
-        pageSize={pageSize}
-        serverPaginationData={serverPaginationData}
-        pageSizeOptions={pageSizeOptions}
-        width={width}
-        height={height}
-        serverPagination={serverPagination}
-        onServerPaginationChange={handleServerPaginationChange}
-        // 9 page items in > 340px works well even for 100+ pages
-        maxPageItemCount={width > 340 ? 9 : 7}
-        noResults={(filter: string) =>
-          t(filter ? 'No matching records found' : 'No records found')
-        }
-        searchInput={includeSearch && SearchInput}
-        selectPageSize={pageSize !== null && SelectPageSize}
-        // not in use in Superset, but needed for unit tests
-        sticky={sticky}
+    <>
+      <MessageModal
+        isOpen={isModalOpen}
+        hide={hideModal}
+        submit={sendData}
+        primaryId={id}
       />
-    </Styles>
+      <Styles>
+        <DataTable<D>
+          columns={columns}
+          data={data}
+          rowCount={rowCount}
+          tableClassName="table table-striped table-condensed"
+          pageSize={pageSize}
+          serverPaginationData={serverPaginationData}
+          pageSizeOptions={pageSizeOptions}
+          width={width}
+          height={height}
+          serverPagination={serverPagination}
+          onServerPaginationChange={handleServerPaginationChange}
+          // 9 page items in > 340px works well even for 100+ pages
+          maxPageItemCount={width > 340 ? 9 : 7}
+          noResults={(filter: string) =>
+            t(filter ? 'No matching records found' : 'No records found')
+          }
+          searchInput={includeSearch && SearchInput}
+          selectPageSize={pageSize !== null && SelectPageSize}
+          // not in use in Superset, but needed for unit tests
+          sticky={sticky}
+        />
+      </Styles>
+    </>
   );
 }

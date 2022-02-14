@@ -109,6 +109,10 @@ export interface TableChartTransformedProps<D extends DataRecord = DataRecord> {
   emitFilter?: boolean;
   onChangeFilter?: ChartProps['hooks']['onAddFilter'];
   columnColorFormatters?: ColorFormatters;
+  customModal: boolean;
+  requestMethod: string;
+  requestUrl: string;
+  primaryId: string;
 }
 
 export default {};

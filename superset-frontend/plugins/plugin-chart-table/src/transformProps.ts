@@ -215,6 +215,10 @@ const transformProps = (
     query_mode: queryMode,
     show_totals: showTotals,
     conditional_formatting: conditionalFormatting,
+    custom_modal: customModal,
+    request_method: requestMethod,
+    request_url: requestUrl,
+    primary_id: primaryId,
   } = formData;
   const timeGrain = extractTimegrain(formData);
 
@@ -265,6 +269,10 @@ const transformProps = (
     onChangeFilter,
     columnColorFormatters,
     timeGrain,
+    customModal,
+    requestMethod,
+    requestUrl,
+    primaryId,
   };
 };
 

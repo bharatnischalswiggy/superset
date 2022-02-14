@@ -144,6 +144,8 @@ const dnd_all_columns: typeof sharedControls.groupby = {
   visibility: isRawMode,
 };
 
+const METHOD_VERBS = ['POST', 'PUT', 'DELETE'];
+
 const percent_metrics: typeof sharedControls.metrics = {
   type: 'MetricsControl',
   label: t('Percentage metrics'),
@@ -499,6 +501,74 @@ const config: ControlPanelConfig = {
                   verboseMap,
                 };
               },
+            },
+          },
+        ],
+        [
+          {
+            name: 'custom_modal',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Want a custom modal button as last column',
+              description: '',
+              default: false,
+              visibility: isRawMode,
+            },
+          },
+        ],
+        [
+          {
+            name: 'request_method',
+            config: {
+              type: 'SelectControl',
+              freeForm: true,
+              label: 'Http verb',
+              default: 'POST',
+              choices: METHOD_VERBS,
+              description: '',
+              visibility: ({ controls }) => !!controls.custom_modal.value,
+            },
+          },
+        ],
+        [
+          {
+            name: 'request_url',
+            config: {
+              type: 'TextControl',
+              label: 'Request Url',
+              description:
+                'The url to which request will be sent. You can use [id] in url which will be replaced by the primary id you have selected',
+              visibility: ({ controls }) => !!controls.custom_modal.value,
+            },
+          },
+        ],
+        [
+          {
+            name: 'primary_id',
+            config: {
+              type: 'SelectControl',
+              label: 'primary id',
+              description:
+                'Column whose data will be sent along with custom data',
+              multi: false,
+              freeForm: true,
+              default: '',
+              optionRenderer: c => <ColumnOption showType column={c} />,
+              valueRenderer: c => <ColumnOption column={c} />,
+              valueKey: 'column_name',
+              mapStateToProps: ({ datasource, controls }, controlState) => ({
+                options: datasource?.columns || [],
+                queryMode: getQueryMode(controls),
+                externalValidationErrors:
+                  isRawMode({ controls }) &&
+                  ensureIsArray(controlState.value).length === 0
+                    ? [t('must have a value')]
+                    : [],
+              }),
+
+              sortComparator: (a: { label: string }, b: { label: string }) =>
+                a.label.localeCompare(b.label),
+              visibility: ({ controls }) => !!controls.custom_modal.value,
             },
           },
         ],

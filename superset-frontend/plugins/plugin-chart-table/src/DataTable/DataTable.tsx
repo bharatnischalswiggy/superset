@@ -36,6 +36,7 @@ import {
   Row,
 } from 'react-table';
 import { matchSorter, rankings } from 'match-sorter';
+import Button from 'src/components/Button';
 import GlobalFilter, { GlobalFilterProps } from './components/GlobalFilter';
 import SelectPageSize, {
   SelectPageSizeProps,
@@ -235,9 +236,23 @@ export default function DataTable<D extends object>({
             const { key: rowKey, ...rowProps } = row.getRowProps();
             return (
               <tr key={rowKey || row.id} {...rowProps}>
-                {row.cells.map(cell =>
-                  cell.render('Cell', { key: cell.column.id }),
-                )}
+                {row.cells.map(cell => {
+                  if (
+                    typeof cell.value === 'object' &&
+                    cell.value !== 'null' &&
+                    cell.value?.key === 'button'
+                  ) {
+                    const { handleClick, label } = cell.value;
+                    return (
+                      <td>
+                        <Button buttonSize="small" onClick={handleClick}>
+                          {label}
+                        </Button>
+                      </td>
+                    );
+                  }
+                  return cell.render('Cell', { key: cell.column.id });
+                })}
               </tr>
             );
           })
